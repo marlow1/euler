@@ -52,6 +52,7 @@ What is the smallest positive number that is evenly divisible by all of the numb
 
 '''
 
+
 def idiot_answer(n):
     #  first take product of everything up to n, then count down to see if it divides cleanly
     big_n = 1
@@ -69,13 +70,77 @@ def divides_clean(x, n):
             return False
     return True
 
+
 def non_idiot_answer():
+    import math
     #  smallest number n thats evenly divided by {k1, k2,...km} is least common multiple of the numbers.
     #  LCM(x,y) = x * y / GCD(x, y) where GCD is greatest commont divisor
+    ans = 1
+    for i in range(1,21):
+        ans *= i // math.gcd(i, ans)
+    return str(ans)
 
+
+'''
+PROBLEM  6
+
+The sum of the squares of the first ten natural numbers is,
+
+1^2 + 2^2 + ... + 10^2 = 385
+The square of the sum of the first ten natural numbers is,
+
+(1 + 2 + ... + 10)^2 = 55^2 = 3025
+Hence the difference between the sum of the squares of the first ten natural numbers and the square of the sum is 3025 − 385 = 2640.
+
+Find the difference between the sum of the squares of the first one hundred natural numbers and the square of the sum.
+
+'''
+
+
+def idiot_answer():  # strangely also non idiot answer
+    square_of_sums = sum(i for i in range(1,101))
+    square_of_sums = square_of_sums * square_of_sums
+    sum_of_squares = sum(i*i for i in range(1,101))
+
+    return sum_of_squares - square_of_sums
+
+
+'''
+PROBLEM 7
+
+By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13, we can see that the 6th prime is 13.
+
+What is the 10 001st prime number?
+
+'''
+import math
+
+
+def idiot_answer():
+    x = 0
+    prime_count = 0
+    while(1):
+        if is_prime(x):
+            if prime_count == 10002:
+                return x
+            prime_count += 1
+        x += 1
+
+
+def is_prime(n):
+    #  Given an input number n, check whether any prime integer m from 2 to √n evenly divides n (the division leaves no remainder).
+    #  If n is divisible by any m then n is composite, otherwise it is prime.[1]
+    if n in [1, 2]:
+        return True
+    q = int(math.sqrt(n)) + 1
+    for m in range(2, q):
+        if n % m == 0:
+            return False
+    print(n)
+    return True
 
 
 
 
 if __name__=='__main__':
-    print(idiot_answer(10))
+    print(idiot_answer())
